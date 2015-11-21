@@ -8,6 +8,7 @@
  */
 
 #define TX_LED_PIN 4
+#define TX_PIN 5
 #define OFF "off"
 #define ON "on"
 #define NONE "none"
@@ -15,6 +16,7 @@
 void setup() {
   Serial.begin(9600);
   pinMode(TX_LED_PIN, OUTPUT);
+  pinMode(TX_PIN, INPUT);
 }
 
 void loop() {
