@@ -14,22 +14,30 @@
 #define OFF "off"
 #define ON "on"
 #define NONE "none"
-#define MESSAGE 0x845FED
 
 RH_ASK txDriver;
+const char *message = "ADAStx1";
 
 void setup() {
   Serial.begin(9600);
   pinMode(TX_LED_PIN, OUTPUT);
   pinMode(TX_PIN, INPUT);
-  if (!txDriver.init()){
-         Serial.println("TX driver init failed");
+  if (!txDriver.init()) {
+    Serial.println("TX driver init failed");
   }
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  testTransmitter();
+}
 
+void testTransmitter() {
+  txDriver.send((uint8_t *)message, strlen(message));
+  txDriver.waitPacketSent();
+  toggleLED(ON, TX_LED_PIN);
+  delay(100);
+  toggleLED(OFF, TX_LED_PIN);
+  delay(60000);
 }
 
 void toggleLED(String mode, int pin) {
