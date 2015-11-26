@@ -22,7 +22,6 @@ int txButtonState = 0;
 void setup() {
   Serial.begin(DEBUG_BAUD);
   pinMode(TX_LED_PIN, OUTPUT);
-  //pinMode(TX_PIN, OUTPUT);
   pinMode(TX_BUTTON_PIN, INPUT);
   vw_set_ptt_inverted(true);
   vw_setup(TX_BAUD);
@@ -40,6 +39,7 @@ void loop() {
     vw_send((uint8_t *)message, strlen(message));
     vw_wait_tx();
     toggleLED(OFF, TX_LED_PIN);
+    Serial.println("Message sent");
   }
   else {
     toggleLED(OFF, TX_LED_PIN);
