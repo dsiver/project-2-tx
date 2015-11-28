@@ -12,6 +12,8 @@
 #define TX_PIN 5
 #define TX_BUTTON_PIN 2
 #define TX_BAUD 2000
+#define PHOTO_PIN A0
+#define PHOTO_THRESHOLD 800
 #define OFF "off"
 #define ON "on"
 #define NONE "none"
@@ -31,7 +33,8 @@ void setup() {
 void loop() {
   char *message;
   txButtonState = digitalRead(TX_BUTTON_PIN);
-  if (txButtonState == HIGH) {
+  int photoReading = analogRead(PHOTO_PIN);
+  if (txButtonState == HIGH || photoReading > PHOTO_THRESHOLD) {
     toggleLED(ON, TX_LED_PIN);
     char *message = "1";
     Serial.print("Sending message: ");
