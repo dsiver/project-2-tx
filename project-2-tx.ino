@@ -13,7 +13,7 @@
 #define TX_BUTTON_PIN 2
 #define TX_BAUD 2000
 #define PHOTO_PIN A0
-#define PHOTO_THRESHOLD 800
+#define PHOTO_THRESHOLD 850
 #define OFF "off"
 #define ON "on"
 #define NONE "none"
@@ -22,7 +22,7 @@
 int txButtonState = 0;
 
 void setup() {
-  Serial.begin(DEBUG_BAUD);
+  //Serial.begin(DEBUG_BAUD);
   pinMode(TX_LED_PIN, OUTPUT);
   pinMode(TX_BUTTON_PIN, INPUT);
   vw_set_ptt_inverted(true);
@@ -35,14 +35,16 @@ void loop() {
   txButtonState = digitalRead(TX_BUTTON_PIN);
   int photoReading = analogRead(PHOTO_PIN);
   if (txButtonState == HIGH || photoReading > PHOTO_THRESHOLD) {
+    //Serial.print("photoReading: ");
+    //Serial.println(photoReading);
     toggleLED(ON, TX_LED_PIN);
     char *message = "1";
-    Serial.print("Sending message: ");
-    Serial.println(message);
+    //Serial.print("Sending message: ");
+    //Serial.println(message);
     vw_send((uint8_t *)message, strlen(message));
     vw_wait_tx();
     toggleLED(OFF, TX_LED_PIN);
-    Serial.println("Message sent");
+    //Serial.println("Message sent");
   }
   else {
     toggleLED(OFF, TX_LED_PIN);
